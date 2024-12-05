@@ -2,17 +2,11 @@ package com.jpacourse.persistence.entity;
 
 import com.jpacourse.persistence.enums.Specialization;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import java.util.Collection;
+import javax.persistence.*;
 
 @Entity
-@Table(name = "DOCTOR")
+@Table(name = "doctor")
 public class DoctorEntity {
 
 	@Id
@@ -28,6 +22,7 @@ public class DoctorEntity {
 	@Column(nullable = false)
 	private String telephoneNumber;
 
+	@Column(nullable = false)
 	private String email;
 
 	@Column(nullable = false)
@@ -36,6 +31,16 @@ public class DoctorEntity {
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
 	private Specialization specialization;
+
+
+	//	dwukierunkowa
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+	private Collection<VisitEntity> visits;
+
+	//	jednokierunkowa
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "address_id")
+	private AddressEntity address;
 
 	public Long getId() {
 		return id;
@@ -91,6 +96,28 @@ public class DoctorEntity {
 
 	public void setSpecialization(Specialization specialization) {
 		this.specialization = specialization;
+	}
+
+
+	public Collection<VisitEntity> getVisits() {return visits;}
+
+	public void removeVisit(VisitEntity visit){
+		visits.remove(visit);
+		visit.setDoctor(null);
+	}
+
+	public void addVisit(VisitEntity visit){
+		visits.add(visit);
+		visit.setDoctor(this);
+	}
+
+
+	public AddressEntity getAddress() {
+		return address;
+	}
+
+	public void setAddress(AddressEntity address){
+		this.address = address;
 	}
 
 }
