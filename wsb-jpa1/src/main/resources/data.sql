@@ -29,11 +29,11 @@ INSERT INTO doctor (id, first_name, last_name, telephone_number, email, doctor_n
 INSERT INTO doctor (id, first_name, last_name, telephone_number, email, doctor_number, specialization, address_id) VALUES (10, 'Jan', 'Krawczyk', '+48 696 838 877', 'jan.krawczyk@o2.pl', 'DOC110', 'Dermatologia', 2);
 
 --- patients
-INSERT INTO patient (id, first_name, last_name, telephone_number, email, patient_number, date_of_birth, address_id) VALUES (1, 'Krzysztof', 'Majewski', '+48 885 598 633', 'krzysztof.majewski@onet.pl', 'PAT101', '1995-05-12', 4);
-INSERT INTO patient (id, first_name, last_name, telephone_number, email, patient_number, date_of_birth, address_id) VALUES (2, 'Michał', 'Stępień', '32 569 75 88', 'michal.stepien@interia.pl', 'PAT102', '1988-06-07', 6);
-INSERT INTO patient (id, first_name, last_name, telephone_number, email, patient_number, date_of_birth, address_id) VALUES (3, 'Ewa', 'Zielińska', '+48 505 951 799', 'ewa.zielinska@hotmail.com', 'PAT103', '1971-05-22', 5);
-INSERT INTO patient (id, first_name, last_name, telephone_number, email, patient_number, date_of_birth, address_id) VALUES (4, 'Agnieszka', 'Piotrowska', '798 940 259', 'agnieszka.piotrowska@o2.pl', 'PAT104', '1974-09-15', 10);
-INSERT INTO patient (id, first_name, last_name, telephone_number, email, patient_number, date_of_birth, address_id) VALUES (5, 'Jakub', 'Nowicki', '+48 732 659 176', 'jakub.nowicki@fundacja.pl', 'PAT105', '1976-01-28', 9);
+INSERT INTO patient (id, first_name, last_name, telephone_number, email, patient_number, date_of_birth, address_id, age) VALUES (1, 'Krzysztof', 'Majewski', '+48 885 598 633', 'krzysztof.majewski@onet.pl', 'PAT101', '1995-05-12', 4, 23);
+INSERT INTO patient (id, first_name, last_name, telephone_number, email, patient_number, date_of_birth, address_id, age) VALUES (2, 'Michał', 'Stępień', '32 569 75 88', 'michal.stepien@interia.pl', 'PAT102', '1988-06-07', 6, 45);
+INSERT INTO patient (id, first_name, last_name, telephone_number, email, patient_number, date_of_birth, address_id, age) VALUES (3, 'Ewa', 'Zielińska', '+48 505 951 799', 'ewa.zielinska@hotmail.com', 'PAT103', '1971-05-22', 5,  68);
+INSERT INTO patient (id, first_name, last_name, telephone_number, email, patient_number, date_of_birth, address_id, age) VALUES (4, 'Agnieszka', 'Piotrowska', '798 940 259', 'agnieszka.piotrowska@o2.pl', 'PAT104', '1974-09-15', 10, 27);
+INSERT INTO patient (id, first_name, last_name, telephone_number, email, patient_number, date_of_birth, address_id, age) VALUES (5, 'Jakub', 'Nowicki', '+48 732 659 176', 'jakub.nowicki@fundacja.pl', 'PAT105', '1976-01-28', 9, 85);
 
 --- visits
 INSERT INTO visit (id, description, time, doctor_id, patient_id) VALUES (1, 'Kontrola roczna', '2024-11-10 10:30:00', 7, 3);

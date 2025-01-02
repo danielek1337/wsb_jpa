@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.Collection;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "patient")
@@ -38,6 +39,10 @@ public class PatientEntity {
 	//dwukierunkowa
 	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
 	private Collection<VisitEntity> visits;
+
+
+	@Column
+	private Integer age;
 
 	public Long getId() {
 		return id;
@@ -106,6 +111,9 @@ public class PatientEntity {
 		visits.add(visit);
 		visit.setPatient(this);
 	}
+	public void setVisits(List<VisitEntity> visits) {
+		this.visits = visits;
+	}
 
 
 	public AddressEntity getAddress() {
@@ -114,6 +122,14 @@ public class PatientEntity {
 
 	public void setAddress(AddressEntity address){
 		this.address = address;
+	}
+
+
+	public Integer getAge() {
+		return age;
+	}
+	public void setAge(Integer age) {
+		this.age = age;
 	}
 
 }
