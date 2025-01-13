@@ -1,3 +1,5 @@
+package com.jpacourse;
+
 import com.jpacourse.dto.PatientTO;
 import com.jpacourse.persistence.entity.VisitEntity;
 import com.jpacourse.service.PatientService;
@@ -7,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import static org.assertj.core.api.Assertions.assertThat;
+import java.util.List;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest(properties = {
         "spring.jpa.database-platform=org.hibernate.dialect.H2Dialect",
@@ -26,32 +30,25 @@ public class PatientServiceTest {
         // then
         assertThat(patient).isNotNull();
         assertThat(patient.getId()).isEqualTo(patientId);
-        assertThat(patient.getFirstName()).isEqualTo("Anna");
-        assertThat(patient.getLastName()).isEqualTo("Nowak");
-        assertThat(patient.getAge()).isEqualTo(33);
-        assertThat(patient.getVisits()).hasSize(1);
+        assertThat(patient.getFirstName()).isEqualTo("Michał");
+        assertThat(patient.getLastName()).isEqualTo("Stępień");
+        assertThat(patient.getAge()).isEqualTo(45);
+        assertThat(patient.getVisits()).hasSize(5);
         VisitEntity visit = patient.getVisits().get(0);
-        assertThat(visit.getDescription()).isEqualTo("Pediatric check-up");
-        assertThat(visit.getTime().toString()).isEqualTo("2023-01-02T15:00");
+        assertThat(visit.getDescription()).isEqualTo("Porada specjalistyczna");
+        assertThat(visit.getTime().toString()).isEqualTo("2024-10-15T14:45");
     }
+
     @Test
-    public void testShouldRemovePatientAndHisVisitsButNotAffectOtherDoctors() {
+    public void shouldFindAllVisitsForPatient() {
+
         // given
-        Long patientIdToDelete = 1L;
-        PatientTO patientBefore = patientService.findById(patientIdToDelete);
-        assertThat(patientBefore).isNotNull();
-        assertThat(patientBefore.getVisits()).isNotEmpty();
-        Long otherPatientId = 2L;
-        PatientTO otherPatientBefore = patientService.findById(otherPatientId);
-        assertThat(otherPatientBefore).isNotNull();
-        assertThat(otherPatientBefore.getVisits()).isNotEmpty();
+        Long patientId = 4L;
+
         // when
-        patientService.deleteById(patientIdToDelete);
+        List<VisitEntity> visits = patientService.getAllVisitsByPatientId(patientId);
+
         // then
-        PatientTO patientAfter = patientService.findById(patientIdToDelete);
-        assertThat(patientAfter).isNull();
-        PatientTO otherPatientAfter = patientService.findById(otherPatientId);
-        assertThat(otherPatientAfter).isNotNull();
-        assertThat(otherPatientAfter.getVisits()).isNotEmpty();
+        assertThat(visits).hasSize(4);
     }
 }

@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.jpacourse.persistence.entity.PatientEntity;
 import com.jpacourse.service.PatientService;
+import com.jpacourse.persistence.entity.VisitEntity;
+import java.util.List;
 
 @Service
 @Transactional
@@ -24,5 +26,10 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public void deleteById(Long id) {
         patientDao.delete(id);
+    }
+
+    public List<VisitEntity> getAllVisitsByPatientId(Long patientId) {
+        PatientEntity patient = patientDao.findOne(patientId);
+        return patient.getVisits();
     }
 }

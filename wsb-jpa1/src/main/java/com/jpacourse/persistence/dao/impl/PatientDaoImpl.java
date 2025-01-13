@@ -7,6 +7,9 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.time.LocalDateTime;
+import java.util.List;
+
+
 @Repository
 public class PatientDaoImpl extends AbstractDao<PatientEntity, Long> implements PatientDao {
     @PersistenceContext
@@ -30,4 +33,30 @@ public class PatientDaoImpl extends AbstractDao<PatientEntity, Long> implements 
         em.merge(patient);
         em.flush();
     }
+
+    @Override
+    public List<PatientEntity> findByAgeGreaterThan(int age) {
+        return em.createQuery(
+                        "SELECT p FROM PatientEntity p WHERE p.age > :age", PatientEntity.class)
+                .setParameter("age", age)
+                .getResultList();
+    }
+
+    @Override
+    public List<PatientEntity> findPatientsWithMoreThanXVisits(int x) {
+        return em.createQuery("SELECT pe FROM PatientEntity pe WHERE size(pe.visits) > :x", PatientEntity.class)
+                .setParameter("x", x)
+                .getResultList();
+    }
+
+
+
+    @Override
+    public List<PatientEntity> findByLastName(String lastName) {
+        return em.createQuery(
+                        "SELECT p FROM PatientEntity p WHERE p.lastName = :lastName", PatientEntity.class)
+                .setParameter("lastName", lastName)
+                .getResultList();
+    }
+
 }

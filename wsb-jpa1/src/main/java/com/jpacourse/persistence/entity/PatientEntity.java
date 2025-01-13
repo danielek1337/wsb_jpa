@@ -14,6 +14,11 @@ public class PatientEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+
+	@Version
+	private Long version;
+
+
 	@Column(nullable = false)
 	private String firstName;
 
@@ -37,8 +42,8 @@ public class PatientEntity {
 	private AddressEntity address;
 
 	//dwukierunkowa
-	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
-	private Collection<VisitEntity> visits;
+	@OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.EAGER)
+	private List<VisitEntity> visits;
 
 
 	@Column
@@ -100,7 +105,7 @@ public class PatientEntity {
 		this.dateOfBirth = dateOfBirth;
 	}
 
-	public Collection<VisitEntity> getVisits() {return visits;}
+	public List<VisitEntity> getVisits() {return visits;}
 
 	public void removeVisit(VisitEntity visit){
 		visits.remove(visit);
@@ -130,6 +135,14 @@ public class PatientEntity {
 	}
 	public void setAge(Integer age) {
 		this.age = age;
+	}
+
+
+	public Long getVersion() {
+		return version;
+	}
+	public void setVersion(Long version) {
+		this.version = version;
 	}
 
 }
